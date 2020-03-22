@@ -44,23 +44,6 @@ io.sockets.on('connection',
     if (q < 0 && queue.length > 1) {
       next(true);
     }
-    // Listen for add messages
-    socket.on('add', function (data) {
-      // Data comes in as whatever was sent, including objects
-      //console.log("Received: 'add' " + data);
-
-      // Send it to all clients, including this one
-      io.sockets.emit('add', data);
-    });
-
-    // Listen for remove messages
-    socket.on('remove', function () {
-      // Data comes in as whatever was sent, including objects
-      //console.log("Received: 'remove');
-
-      // Send it to all clients, including this one
-      io.sockets.emit('remove');
-    });
 
     // Ready for next
     socket.on('next', function () {
