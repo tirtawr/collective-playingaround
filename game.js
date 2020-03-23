@@ -13,7 +13,7 @@ class Game{
   addPlayer (socket) {
     if(!this.players.length) {
       this.currentPlayer = socket.id
-      this.setPrompt()
+      if (!this.prompt.length) { this.setPrompt() }
     }
     this.players.push(socket)
   }
