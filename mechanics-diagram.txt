@@ -6,28 +6,33 @@ Server -> PlayerClient: 3. setPrompt { prompt: String }
 Server -> PlayerClient: 4. [To All] allPlayers { players: [String] }
 note right: filled with an array of player ids
 PlayerClient -> PlayerClient: 5. Update player list
-Server -> PlayerClient: 6. currentPlayer { id: String }
-note right: Only if client is the first player
+group If client is the first player
+    Server -> PlayerClient: 6. currentPlayer { id: String }
+end
 
 == Disconnecting from the server ==
 
 PlayerClient -> Server: 1. Disconnect
 Server -> Server: 2. Remove client from socket list, and figure out the \ncurrent player should be changed
-Server -> PlayerClient: 3. [To All] allPlayers { players: [String] }
-PlayerClient -> PlayerClient: 4. Update player list
+group If current player needs to be changed 
+    Server -> PlayerClient: 3. [To All] currentPlayer { id: String }
+end
+Server -> PlayerClient: 4. [To All] allPlayers { players: [String] }
+PlayerClient -> PlayerClient: 5. Update player list
 
 == Drawing Mechanics ==
 
 Server -> PlayerClient: 1. [To All] currentPlayer { id: String }
 
-loop Until ink is used up
+LOOP Until ink is used up
     PlayerClient -> Server: 2. drawPoint { x: Integer, y: Integer, colorRed: Integer, \ncolorGreen: Integer, colorBlue: Integer, colorAlpha: Integer }
     note right: x and y is normalized
     Server -> PlayerClient: 3. [To All] drawPoint { x: Integer, y: Integer, colorRed: Integer, \ncolorGreen: Integer, colorBlue: Integer, colorAlpha: Integer }
+    PlayerClient -> PlayerClient: 4. Draw on canvas
 end
 
-PlayerClient -> Server: 4. nextPlayer { }
-Server -> Server: 5. find id of next player on queue
-Server -> PlayerClient: 6. [To All] currentPlayer { id: String }
+PlayerClient -> Server: 5. nextPlayer { }
+Server -> Server: 6. find id of next player on queue
+Server -> PlayerClient: 7. [To All] currentPlayer { id: String }
 
 @enduml
