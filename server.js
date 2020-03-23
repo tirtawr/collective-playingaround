@@ -9,6 +9,14 @@ let server = require('http').createServer(app).listen(port, function () {
   console.log('Server listening at port: ', port);
 });
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 // Tell server where to look for files
 app.use(express.static('public'));
 app.get('/', (req, res) => res.redirect('/player'));
@@ -21,6 +29,7 @@ io.sockets.on('connection',
   function (socket) {
     game.addPlayer(socket)
     socket.emit('setPrompt', { prompt: game.getPrompt() })
+    socket.emit('setColor', { color: getRandomColor() })
     io.sockets.emit('allPlayers', { players: game.allPlayers() })
     socket.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
 
