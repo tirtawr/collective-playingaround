@@ -100,6 +100,14 @@ socket.on('allPlayers', function({ players }) {
   console.log(players)
 })
 
+socket.on('gameFinished', function(){
+  console.log('game has finished dawg, go home')
+})
+
+function finishRound(){
+  socket.emit('finishRound')
+}
+
 function setup(){
   createCanvas(800, 600);
   background(0);
