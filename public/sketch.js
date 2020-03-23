@@ -4,6 +4,7 @@ let socket = io();
 
 /*
 to-do:
+make sure it works??
 */
 
 // Listen for confirmation of connection
@@ -19,6 +20,8 @@ let myTurn = false;
 let myColor;
 //keep track of ink;
 let ink = 0;
+//state i guess?
+let hasGone = false;
 
 let getRandomColor = () => {
   var letters = '0123456789ABCDEF';
@@ -30,6 +33,15 @@ let getRandomColor = () => {
 }
 
 function setup() {
+
+  socket.on('setPrompt', function ({ prompt }) {
+    console.log(prompt)
+  })
+
+  socket.on('gameFinished', function(){
+    background(255);
+    text("DONE", width/2, height/2);
+  });
 
   myColor = getRandomColor();
 
@@ -48,7 +60,7 @@ function setup() {
 
   // Listen for changes to text
   socket.on('drawPoint', function(drawData) {
-    // Update string on screen
+    // Update line on screen
     drawLine(drawData);
   });
 
@@ -60,7 +72,6 @@ function setup() {
 
 // Draw line
 function drawLine(drawData) {
-
   //then we are drawing the line in the correct color
   stroke(drawData.data.color,drawData.data.inkLeft);
   line(drawData.data.x,drawData.data.y,drawData.data.pX,drawData.data.pY);
@@ -85,40 +96,19 @@ function mouseDragged() {
       color: myColor
     });
     if (ink < 1) {
-      myTurn = false;
-      socket.emit('nextPlayer');
+      if (!hasGone) {
+        myTurn = false;
+        socket.emit('nextPlayer');
+        hasGone = true;
+      } else {
+        socket.emit('finishRound');
+      }
     }
     ink -= 1.5;
   }
 }
 
-//TITOS STUFF
+//TITOS STUFF i dont in there yet
 /*
-let socket = io()
 
-// Listen for confirmation of connection
-socket.on('connect', function() {
-  console.log("Connected")
-})
-
-socket.on('setPrompt', function ({ prompt }) {
-  console.log(prompt)
-})
-
-socket.on('currentPlayer', function({ currentPlayer }){
-  if(currentPlayer === socket.id){
-    console.log(`ITS YOUR TURN DAWG`)
-  } else {
-    console.log(`Current player: ${currentPlayer}`)
-  }
-})
-
-socket.on('allPlayers', function({ players }) {
-  console.log(players)
-})
-
-function setup(){
-  createCanvas(800, 600);
-  background(0);
-}
 */
