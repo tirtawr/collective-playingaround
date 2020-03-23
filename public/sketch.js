@@ -27,9 +27,11 @@ socket.on('connect', function() {
     if(currentPlayer === socket.id){
       console.log(`ITS YOUR TURN DAWG`)
       myTurn = true;
+      document.getElementById('turn-notif').innerHTML = "it's your turn!"
       ink = 255;
     } else {
       console.log(`Current player: ${currentPlayer}`)
+      document.getElementById('turn-notif').innerHTML = "waiting for your turn..."
     }
   });
 
@@ -82,6 +84,24 @@ function setup() {
 
   frameRate(30);
 
+  let y = 20;
+  colors.forEach(color => {
+    colorPatches.push(new ColorPatch(20, y, color))
+    y += 55;
+  });
+  
+}
+
+function draw() {
+  // Draw color patches
+  colorPatches.forEach(colorPatch => {
+    colorPatch.draw();
+  });
+
+  // Draw color indicator
+  fill(myColor.r, myColor.g, myColor.b)
+  noStroke
+  square(width - 80, 20, 60);
 }
 
 // Draw line
@@ -124,6 +144,7 @@ function mouseDragged() {
     ink -= 2;
   }
 }
+
 let queueCurrentPlayer = ''
 
 function makeQueue({players}){
