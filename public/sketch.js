@@ -2,11 +2,6 @@
 // Open and connect input socket
 let socket = io();
 
-// Listen for confirmation of connection
-socket.on('connect', function() {
-  console.log("Connected", socket.id);
-});
-
 //keep track of all users
 let users = {};
 // Is it my turn?
@@ -16,32 +11,45 @@ let myColor;
 //keep track of ink;
 let ink = 0;
 
-function setup() {
+// Listen for confirmation of connection
+socket.on('connect', function() {
+  console.log("Connected", socket.id);
 
-  frameRate(30);
-  createCanvas(windowWidth, windowHeight);
+  socket.on('setPrompt', function ({ prompt }) {
+    // TODO fill this in
+    // Update prompt on screen and erase canvas to make way for new drawing
+  })
 
   // Listen for my turn
-  socket.on('go', function() {
-    myTurn = true;
-    ink = 255;
+  socket.on('currentPlayer', function(currentPlayer) {
+    if(currentPlayer === socket.id){
+      myTurn = true;
+      ink = 255;
+    } else {
+      console.log(`Current player: ${currentPlayer}`)
+      myTurn = false;
+    }
   });
 
   // Listen for changes to text
-  socket.on('draw', function(drawData) {
+  socket.on('drawPoint', function(drawData) {
 
     // Update string on screen
     drawLine(drawData);
   });
+});
 
+function setup() {
+
+  frameRate(30);
+  createCanvas(windowWidth, windowHeight);
 }
 
 // Draw line
 function drawLine(drawData) {
-
   //then we are drawing the line in the correct color
-  stroke(drawData.color,drawData.data.inkLeft);
-  line(drawData.data.x,drawData.data.y,drawData.data.pX,drawData.data.pY);
+  stroke(drawData.color,drawData.inkLeft);
+  line(drawData.x,drawData.y,drawData.pX,drawData.pY);
 }
 
 //mouseDragged function
@@ -65,7 +73,8 @@ function mouseDragged() {
       y: y,
       pX: pX,
       pY: pY,
-      inkLeft: ink
+      inkLeft: ink,
+      color: '#111'
     });
     if (ink < 1) {
       myTurn = false;
