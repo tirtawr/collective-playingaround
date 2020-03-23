@@ -8,4 +8,10 @@ body {
   background: #5fc5ed;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
+
+.title {
+  opacity: 50%;
+}
+
