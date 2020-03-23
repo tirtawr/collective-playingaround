@@ -23,14 +23,10 @@ function setup() {
 
   cnv = createCanvas(windowWidth, windowHeight);
 
-  // Draw line once connected
-  drawLine();
-
   // Listen for my turn
   socket.on('go', function() {
     myTurn = true;
-    //draw the line
-    drawLine();
+    ink = 255;
   });
 
   // Listen for changes to text
@@ -42,14 +38,8 @@ function setup() {
 }
 
 // Draw line
-function drawLine() {
-  // If it's your turn, draw a line
-  if (myTurn) {
-    ink = 255;
-  } else {
-    //socket.emit("draw", data)
-    ink = 0;
-  }
+function drawLine(drawData) {
+
 
   //then we are drawing the line in the correct color
   stroke()
