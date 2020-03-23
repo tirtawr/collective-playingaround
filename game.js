@@ -50,7 +50,7 @@ class Game{
     do {
       const randomIndex = Math.floor(Math.random() * prompts.length)
       selectedPrompt = prompts[randomIndex]
-    } while (!this.discardedPile.includes(selectedPrompt))
+    } while (this.discardedPile.includes(selectedPrompt))
     this.discardedPile.push(selectedPrompt)
     this.prompt = selectedPrompt
   }
