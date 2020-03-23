@@ -40,10 +40,10 @@ io.sockets.on('connection',
     socket.on('disconnect', function() {
       if(game.getCurrentPlayer() === socket.id){
         game.next()
+        io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
       }
       game.removePlayer(socket.id)
       io.sockets.emit('allPlayers', { players: game.allPlayers() })
-      io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
       game.printGameStatus()
     })
   })
