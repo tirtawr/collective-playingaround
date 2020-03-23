@@ -1,3 +1,4 @@
+
 // Open and connect input socket
 let socket = io();
 
@@ -74,14 +75,34 @@ function mouseDragged() {
   }
 }
 
+//TITOS STUFF
 /*
-if it's your turn
+let socket = io()
 
-so first, get the data that it's your turn
+// Listen for confirmation of connection
+socket.on('connect', function() {
+  console.log("Connected")
+})
 
-if the mouse is pressed
-how would this work...
-opacity goes down while the mouse is pressed
-if opacity reaches 0, your turn is over
-if you press enter, your turn is also over (??) or that ends the turn
+socket.on('setPrompt', function ({ prompt }) {
+  console.log(prompt)
+})
+
+socket.on('currentPlayer', function({ currentPlayer }){
+  if(currentPlayer === socket.id){
+    console.log(`ITS YOUR TURN DAWG`)
+  } else {
+    console.log(`Current player: ${currentPlayer}`)
+  }
+})
+
+socket.on('allPlayers', function({ players }) {
+  console.log(players)
+})
+
+function setup(){
+  createCanvas(800, 600);
+  background(0);
+} 
 */
+
