@@ -20,8 +20,6 @@ let myTurn = false;
 let myColor;
 //keep track of ink;
 let ink = 0;
-//state i guess?
-let hasGone = false;
 
 let getRandomColor = () => {
   var letters = '0123456789ABCDEF';
@@ -77,6 +75,14 @@ function drawLine(drawData) {
   line(drawData.data.x,drawData.data.y,drawData.data.pX,drawData.data.pY);
 }
 
+function keyPressed() {
+  if (keyCode === ENTER) {
+    if (myTurn) {
+      socket.emit('finishRound');
+    };
+  }
+}
+
 function mouseDragged() {
   // Ignore if it's not your turn
   if (!myTurn) {
@@ -96,13 +102,8 @@ function mouseDragged() {
       color: myColor
     });
     if (ink < 1) {
-      if (!hasGone) {
-        myTurn = false;
-        socket.emit('nextPlayer');
-        hasGone = true;
-      } else {
-        socket.emit('finishRound');
-      }
+      myTurn = false;
+      socket.emit('nextPlayer');
     }
     ink -= 1.5;
   }
