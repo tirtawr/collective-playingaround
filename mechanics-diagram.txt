@@ -1,0 +1,32 @@
+@startuml
+== Connecting to the server ==
+PlayerClient -> Server: 1. connect
+Server -> Server: 2. Add client to socket list
+Server -> PlayerClient: 3. setPrompt { prompt: String }
+Server -> PlayerClient: 4. [To All] addPlayer { id: String }
+PlayerClient -> PlayerClient: 5. Add player with id
+Server -> PlayerClient: 6. startDrawing { }
+note right: Only if client is the first player
+
+== Disconnecting from the server ==
+
+PlayerClient -> Server: 1. Disconnect
+Server -> Server: 2. Remove client from socket list
+Server -> PlayerClient: 3. [To All] removePlayer { id: String }
+PlayerClient -> PlayerClient: 4. Remove player with id
+
+== Drawing Mechanics ==
+
+Server -> PlayerClient: 1. startDrawing { }
+
+loop Until ink is used up
+    PlayerClient -> Server: 2. drawPoint { x: Integer, y: Integer, colorRed: Integer, \ncolorGreen: Integer, colorBlue: Integer, colorAlpha: Integer }
+    note right: For simplicity's sake, let's force everyone to have the same size canvas
+    Server -> PlayerClient: 3. [To All] drawPoint { x: Integer, y: Integer, colorRed: Integer, \ncolorGreen: Integer, colorBlue: Integer, colorAlpha: Integer }
+end
+
+PlayerClient -> Server: 4. nextPlayer { }
+Server -> Server: 5. find id of next player on queue
+Server -> PlayerClient: [Only to the next player] 6. startDrawing { }
+
+@enduml
