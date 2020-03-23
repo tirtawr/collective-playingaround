@@ -12,7 +12,7 @@ socket.on('connect', function() {
   console.log("Connected", socket.id);
 
   socket.on('setPrompt', function ({ prompt }) {
-    document.getElementById("prompt").innerHTML = prompt
+    //document.getElementById("prompt").innerHTML = prompt
     console.log(prompt)
   });
 
@@ -22,6 +22,8 @@ socket.on('connect', function() {
   });
 
   socket.on('currentPlayer', function({ currentPlayer }){
+    queueCurrentPlayer = currentPlayer 
+    makeQueue(players)
     if(currentPlayer === socket.id){
       console.log(`ITS YOUR TURN DAWG`)
       myTurn = true;
@@ -40,21 +42,19 @@ socket.on('connect', function() {
 
   socket.on('allPlayers', function(data) {
     players = data;
+    makeQueue(data)
   });
 
 });
 
 //keep track of all users
-let players;
+let players = {};
 // Is it my turn?
 let myTurn = false;
 //keep track of color
 let myColor;
 //keep track of ink;
 let ink = 0;
-
-let colors = ['#000000', '#4C4C4C', '#ED150A', '#FE6F00', '#FAE502', '#03CB02', '#00B3FD', '#211FD2', '#A801BE', '#A1512B'];
-let colorPatches = [];
 
 let getRandomColor = () => {
   var letters = '0123456789ABCDEF';
@@ -91,9 +91,12 @@ function setup() {
 }
 
 function draw() {
+  // Draw color patches
   colorPatches.forEach(colorPatch => {
     colorPatch.draw();
   });
+
+  // Draw color indicator
   fill(myColor.r, myColor.g, myColor.b)
   noStroke
   square(width - 80, 20, 60);
@@ -112,14 +115,6 @@ function keyPressed() {
       socket.emit('finishRound');
     };
   }
-}
-
-function mouseClicked() {
-  colorPatches.forEach(colorPatch => {
-    if(colorPatch.isClicked(mouseX, mouseY)) {
-      myColor = hexToRgb(colorPatch.getHexValue());
-    }
-  });
 }
 
 function mouseDragged() {
@@ -147,8 +142,19 @@ function mouseDragged() {
     ink -= 2;
   }
 }
+let queueCurrentPlayer = ''
 
-//adityas STUFF i dont in there yet
-/*
-
-*/
+function makeQueue({players}){
+  const el = document.getElementById('queue-viz')
+  el.innerHTML = ''
+  for(let i = 0; i < players.length; i++){
+    const newDiv = document.createElement("div")
+    const newContent = document.createTextNode(`${ players[i] === socket.id ? 'You' : 'Someone' }`)
+    newDiv.appendChild(newContent)
+    newDiv.classList.add('queue-element')
+    if(queueCurrentPlayer === players[i]) {
+      newDiv.classList.add('current-player')
+    }
+    el.appendChild(newDiv)
+  }
+}
