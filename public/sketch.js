@@ -25,8 +25,10 @@
         console.log(`ITS YOUR TURN DAWG`)
         myTurn = true;
         ink = 255;
+        document.getElementById('turn-notif').innerHTML = "it's your turn!"
       } else {
         console.log(`Current player: ${currentPlayer}`)
+        document.getElementById('turn-notif').innerHTML = "wait for your turn..."
       }
     });
 
