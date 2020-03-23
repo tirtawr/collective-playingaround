@@ -1,5 +1,11 @@
+
 // Open and connect input socket
 let socket = io();
+
+/*
+to-do:
+make sure it works??
+*/
 
 // Listen for confirmation of connection
 socket.on('connect', function() {
@@ -19,11 +25,11 @@ socket.on('connect', function() {
     if(currentPlayer === socket.id){
       console.log(`ITS YOUR TURN DAWG`)
       myTurn = true;
-      document.getElementById('turn-notif').innerHTML="it's your turn!"
+      document.getElementById('turn-notif').innerHTML = "it's your turn!"
       ink = 255;
     } else {
       console.log(`Current player: ${currentPlayer}`)
-      document.getElementById('turn-notif').innerHTML="waiting for your turn..."
+      document.getElementById('turn-notif').innerHTML = "waiting for your turn..."
     }
   });
 
@@ -140,3 +146,4 @@ function mouseDragged() {
     ink -= 2;
   }
 }
+
