@@ -2,6 +2,7 @@
 <html>
   <head>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Da+2&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
@@ -9,10 +10,13 @@
   </head>
   <body>
     <script src="color-patch.js"></script>
-    <h1 class='title'>collective drawing</h1>
-    <h2>draw: <span id='prompt'></span></h2>
+    <h1 class='title'>collective drawing: <span id='prompt'></span></h1>
+    <div id='instructions'>
+      <h2 id='turn-notif'>it's your turn!</h2>
+      <p id='instr-line'>you only have so much ink to spare! choose your lines carefully...</p>
+      <p class='instr-line'>press enter to restart with a new prompt</p>
+    </div>
     <div id='sketch-holder'></div>
-    <p>press enter to start a new drawing</p>
     <script src="sketch.js"></script>
   </body>
 </html>
