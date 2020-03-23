@@ -4,6 +4,7 @@ class Game{
   constructor(){
     this.currentPlayer = ''
     this.players = []
+    this.discardedPile = []
     this.prompt = ''
   }
 
@@ -45,8 +46,13 @@ class Game{
   }
 
   setPrompt() {
-    const randomIndex = Math.floor(Math.random() * prompts.length)
-    this.prompt = prompts[randomIndex]
+    let selectedPrompt
+    do {
+      const randomIndex = Math.floor(Math.random() * prompts.length)
+      selectedPrompt = prompts[randomIndex]
+    } while (!this.discardedPile.includes(selectedPrompt))
+    this.discardedPile.push(selectedPrompt)
+    this.prompt = selectedPrompt
   }
 
   getPrompt(){

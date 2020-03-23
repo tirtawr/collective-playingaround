@@ -36,6 +36,7 @@ io.sockets.on('connection',
     })
 
     socket.on('finishRound', function() {
+      game.setPrompt()
       io.sockets.emit('setPrompt', { prompt: game.getPrompt() })
       game.next()
       io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
