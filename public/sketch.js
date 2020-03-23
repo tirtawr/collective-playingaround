@@ -40,9 +40,9 @@ function setup() {
 // Draw line
 function drawLine(drawData) {
 
-
   //then we are drawing the line in the correct color
-  stroke()
+  stroke(drawData.color,drawData.data.inkLeft);
+  line(drawData.data.x,drawData.data.y,drawData.data.pX,drawData.data.pY);
 }
 
 //mouseDragged function
@@ -55,13 +55,12 @@ function mouseDragged() {
   // Ignore if it's not your turn
   if (!myTurn) {
     return;
+    //else send it all the drawing data you'll need
   } else {
     let x = mouseX / width;
     let y = mouseY / height;
     let pX = pmouseX / width;
     let pY = pmouseY / height;
-    stroke(0,0,0,ink);
-    line(x, y, pX, pY);
     socket.emit('draw', {
       x: x,
       y: y,
@@ -72,11 +71,10 @@ function mouseDragged() {
     });
     if (ink < 1) {
       myTurn = false;
+      socket.emit('next');
     }
     ink -= 1.5;
   }
-  //we are gonna emit draw here
-  //and send the drawing data
 }
 
 /*
@@ -88,5 +86,5 @@ if the mouse is pressed
 how would this work...
 opacity goes down while the mouse is pressed
 if opacity reaches 0, your turn is over
-if you press enter, your turn is also over
+if you press enter, your turn is also over (??) or that ends the turn
 */
