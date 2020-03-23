@@ -94,6 +94,9 @@ function draw() {
   colorPatches.forEach(colorPatch => {
     colorPatch.draw();
   });
+  fill(myColor.r, myColor.g, myColor.b)
+  noStroke
+  square(width - 80, 20, 60);
 }
 
 // Draw line

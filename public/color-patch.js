@@ -14,6 +14,7 @@ class ColorPatch {
     }
 
     draw() {
+        noStroke();
         fill(this.hexValue);
         square(this.x, this.y, this.size);
     }
