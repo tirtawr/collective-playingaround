@@ -3,6 +3,7 @@ const prompts = require('./prompts.js')
 class Game{
   constructor(){
     this.currentPlayer = ''
+    this.gameFinished = false
     this.players = []
     this.discardedPile = []
     this.prompt = ''
@@ -53,10 +54,18 @@ class Game{
     } while (this.discardedPile.includes(selectedPrompt))
     this.discardedPile.push(selectedPrompt)
     this.prompt = selectedPrompt
+    
+    if(this.discardedPile.length === prompts.length) {
+      this.gameFinished = true
+    }
   }
 
   getPrompt(){
     return this.prompt
+  }
+
+  hasGameFinished() {
+    return this.gameFinished
   }
 
   printGameStatus() {
@@ -64,6 +73,7 @@ class Game{
     console.log(`Queue: ${this.players.map(d=>d.id)}`)
     console.log(`Current player: ${this.getCurrentPlayer()}`)
     console.log(`Current prompt: ${this.getPrompt()}`)
+    console.log(`Discarded pile: ${this.discardedPile}`)
     console.log(`----------------------------------------`)
   }
 }

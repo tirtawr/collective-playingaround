@@ -36,10 +36,14 @@ io.sockets.on('connection',
     })
 
     socket.on('finishRound', function() {
-      game.setPrompt()
-      io.sockets.emit('setPrompt', { prompt: game.getPrompt() })
-      game.next()
-      io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
+      if(!game.hasGameFinished()) {
+        game.setPrompt()
+        io.sockets.emit('setPrompt', { prompt: game.getPrompt() })
+        game.next()
+        io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
+      } else {
+        io.sockets.emit('gameFinished')
+      }
     })
 
     // Listen for this client to disconnect
