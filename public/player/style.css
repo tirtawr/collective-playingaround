@@ -1,0 +1,11 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  background: #5fc5ed;
+  justify-content: center;
+  align-items: center;
+}
