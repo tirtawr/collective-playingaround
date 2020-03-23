@@ -10,8 +10,6 @@ socket.on('connect', function() {
 let users = {};
 // Is it my turn?
 let myTurn = false;
-// Canvas element
-let cnv;
 //keep track of color
 let myColor;
 //keep track of ink;
@@ -20,8 +18,7 @@ let ink = 0;
 function setup() {
 
   frameRate(30);
-
-  cnv = createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight);
 
   // Listen for my turn
   socket.on('go', function() {
@@ -31,6 +28,7 @@ function setup() {
 
   // Listen for changes to text
   socket.on('draw', function(drawData) {
+
     // Update string on screen
     drawLine(drawData);
   });
@@ -67,7 +65,6 @@ function mouseDragged() {
       pX: pX,
       pY: pY,
       inkLeft: ink
-    }
     });
     if (ink < 1) {
       myTurn = false;
