@@ -2,6 +2,12 @@
 
 Collective Playingaround is a multiplayer drawing experience made by the utilization of websockets and the html canvas.
 
+## Running the game
+1. Clone the repo
+2. Install dependencies `npm install`
+3. Run the server, `npm run start`
+4. Open the client, `https://localhost:8000`
+
 ## How to Play
 1. All players open `BASE_URL/player`
 2. After every players are connected, the first player will be given a prompt to draw
