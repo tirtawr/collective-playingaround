@@ -35,6 +35,12 @@ io.sockets.on('connection',
       io.sockets.emit('drawPoint', payload)
     })
 
+    socket.on('finishRound', function() {
+      socket.emit('setPrompt', { prompt: game.getPrompt() })
+      game.next()
+      io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
+    })
+
     // Listen for this client to disconnect
     // Tell everyone client has disconnected
     socket.on('disconnect', function() {
