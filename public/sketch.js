@@ -5,16 +5,20 @@ socket.on('connect', function() {
   console.log("Connected")
 })
 
-socket.on('setPrompt', function (payload) {
-  console.log(payload)
+socket.on('setPrompt', function ({ prompt }) {
+  console.log(prompt)
 })
 
-socket.on('startDrawing', function(){
-  console.log(`start drawing dawg`)
+socket.on('currentPlayer', function({ currentPlayer }){
+  if(currentPlayer === socket.id){
+    console.log(`ITS YOUR TURN DAWG`)
+  } else {
+    console.log(`Current player: ${currentPlayer}`)
+  }
 })
 
-socket.on('allPlayers', function(payload) {
-  console.log(payload)
+socket.on('allPlayers', function({ players }) {
+  console.log(players)
 })
 
 function setup(){

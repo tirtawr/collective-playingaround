@@ -22,16 +22,13 @@ io.sockets.on('connection',
     game.addPlayer(socket)
     socket.emit('setPrompt', { prompt: game.getPrompt() })
     io.sockets.emit('allPlayers', { players: game.allPlayers() })
-    
-    if(socket.id === game.getCurrentPlayer()) {
-      socket.emit('startDrawing')
-    }
+    socket.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
 
     game.printGameStatus()
 
     socket.on('nextPlayer', function () {
       game.next()
-      game.findPlayer(game.getCurrentPlayer()).emit('startDrawing')
+      io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
     })
 
     socket.on('drawPoint', function(payload) {
@@ -43,10 +40,10 @@ io.sockets.on('connection',
     socket.on('disconnect', function() {
       if(game.getCurrentPlayer() === socket.id){
         game.next()
-        game.findPlayer(game.getCurrentPlayer()).emit('startDrawing')
       }
       game.removePlayer(socket.id)
       io.sockets.emit('allPlayers', { players: game.allPlayers() })
+      io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
       game.printGameStatus()
     })
   })
