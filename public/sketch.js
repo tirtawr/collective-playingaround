@@ -53,6 +53,9 @@ let myColor;
 //keep track of ink;
 let ink = 0;
 
+let colors = ['#000000', '#4C4C4C', '#ED150A', '#FE6F00', '#FAE502', '#03CB02', '#00B3FD', '#211FD2', '#A801BE', '#A1512B'];
+let colorPatches = [];
+
 let getRandomColor = () => {
   var letters = '0123456789ABCDEF';
   var color = '#';
@@ -79,6 +82,18 @@ function setup() {
 
   frameRate(30);
 
+  let y = 20;
+  colors.forEach(color => {
+    colorPatches.push(new ColorPatch(20, y, color))
+    y += 55;
+  });
+  
+}
+
+function draw() {
+  colorPatches.forEach(colorPatch => {
+    colorPatch.draw();
+  });
 }
 
 // Draw line
@@ -94,6 +109,14 @@ function keyPressed() {
       socket.emit('finishRound');
     };
   }
+}
+
+function mouseClicked() {
+  colorPatches.forEach(colorPatch => {
+    if(colorPatch.isClicked(mouseX, mouseY)) {
+      myColor = hexToRgb(colorPatch.getHexValue());
+    }
+  });
 }
 
 function mouseDragged() {
