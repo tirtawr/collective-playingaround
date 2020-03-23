@@ -8,4 +8,27 @@ body {
   background: #5fc5ed;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  font-family: 'Baloo Da 2', cursive;
+
 }
+
+#instructions {
+  justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.title {
+  opacity: 50%;
+  margin: 0
+}
+
+h2, p{
+  margin: 0
+}
+
+
