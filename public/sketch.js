@@ -12,7 +12,7 @@ socket.on('connect', function() {
   console.log("Connected", socket.id);
 
   socket.on('setPrompt', function ({ prompt }) {
-    //document.getElementById("prompt").innerHTML = prompt
+    document.getElementById("prompt").innerHTML = prompt
     console.log(prompt)
   });
 
