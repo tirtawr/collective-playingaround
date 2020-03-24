@@ -37,6 +37,7 @@ h2, p{
 
 .queue-element{
   border: 2px solid black;
+  padding: 2px;
   margin: 0px 4px;
   display: inline-block;
 }
