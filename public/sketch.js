@@ -1,7 +1,7 @@
 
 // Open and connect input socket
 let socket = io();
-
+const startingInkLevel = 255;
 /*
 to-do:
 make sure it works??
@@ -28,7 +28,7 @@ socket.on('connect', function() {
       console.log(`ITS YOUR TURN DAWG`)
       myTurn = true;
       document.getElementById('turn-notif').innerHTML = "it's your turn!"
-      ink = 255;
+      ink = startingInkLevel;
     } else {
       console.log(`Current player: ${currentPlayer}`)
       document.getElementById('turn-notif').innerHTML = "waiting for your turn..."
@@ -103,9 +103,13 @@ function draw() {
   });
 
   // Draw color indicator
+  
+  noStroke()
+  fill('white')
+  rect(width - 20, 0, 20, height);
   fill(myColor.r, myColor.g, myColor.b)
-  noStroke
-  square(width - 80, 20, 60);
+  let rectHeight = height * ink / startingInkLevel
+  rect(width - 20, height - rectHeight, 20, height * ink / startingInkLevel);
 }
 
 // Draw line
