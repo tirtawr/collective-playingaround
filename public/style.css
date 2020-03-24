@@ -31,4 +31,16 @@ h2, p{
   margin: 0
 }
 
+#queue-viz{
+  
+}
 
+.queue-element{
+  border: 2px solid black;
+  margin: 0px 4px;
+  display: inline-block;
+}
+
+.current-player{
+  background: deeppink;
+}
