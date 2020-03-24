@@ -7,7 +7,10 @@ body {
   text-align: center;
   background: #5fc5ed;
   font-family: 'Baloo Da 2', cursive;
+}
 
+#defaultCanvas0{
+  margin-bottom: 50px;
 }
 
 #instructions {
@@ -21,15 +24,16 @@ body {
 
 .title {
   opacity: 50%;
-  margin: 0
+  padding-top: 16px;
 }
 
 h2, p{
   margin: 0
 }
 
-#queue-viz{
-  
+.heading{
+  font-size: 20px;
+  text-decoration: underline;
 }
 
 .queue-element{

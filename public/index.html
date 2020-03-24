@@ -10,12 +10,18 @@
   </head>
   <body>
     <script src="color-patch.js"></script>
-    <h1 class='title'>collective drawing: <span id='prompt'></span></h1>
+    <h1 class='title'>Collective Drawing</h1>
     <div id='instructions'>
-      <div id="queue-viz"></div>
-      <h2 id='turn-notif'>it's your turn!</h2>
+      <span class="heading">Rules</span>
       <p id='instr-line'>you only have so much ink to spare! choose your lines carefully...</p>
       <p class='instr-line'>press enter to restart with a new prompt</p>
+      <div id="queue-wrapper" style="margin: 20px 0px;">
+        <div id="queue-viz"></div>
+        <p id='turn-notif'>it's your turn!</p>
+      </div>
+      
+      <h2 id='prompt'></h2>
+      
     </div>
     <div id='sketch-holder'></div>
     <script src="sketch.js"></script>
