@@ -91,7 +91,7 @@ function setup() {
   let y = 20;
   colors.forEach(color => {
     colorPatches.push(new ColorPatch(20, y, color))
-    y += 55;
+    y += 58;
   });
   
 }
