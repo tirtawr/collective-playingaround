@@ -4,11 +4,8 @@ html, body {
 
 body {
   margin: 0;
-  display: flex;
+  text-align: center;
   background: #5fc5ed;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
   font-family: 'Baloo Da 2', cursive;
 
 }
