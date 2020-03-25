@@ -7,6 +7,7 @@ class Game{
     this.players = []
     this.discardedPile = []
     this.prompt = ''
+    this.canvasState = []
   }
 
   // add input client
@@ -66,6 +67,24 @@ class Game{
 
   hasGameFinished() {
     return this.gameFinished
+  }
+
+  reset(){
+    this.discardedPile = []
+    this.gameFinished = false
+    this.setPrompt()
+  }
+
+  getCanvasState() {
+    return this.canvasState
+  }
+
+  addToCanvas(data) {
+    this.canvasState.push(data)
+  }
+
+  clearCanvas() {
+    this.canvasState = []
   }
 
   printGameStatus() {

@@ -21,6 +21,7 @@ io.sockets.on('connection',
   function (socket) {
     game.addPlayer(socket)
     socket.emit('setPrompt', { prompt: game.getPrompt() })
+    socket.emit('initialState', { canvas: game.getCanvasState() })
     io.sockets.emit('allPlayers', { players: game.allPlayers() })
     socket.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
 
@@ -33,6 +34,7 @@ io.sockets.on('connection',
 
     socket.on('drawPoint', function(payload) {
       io.sockets.emit('drawPoint', payload)
+      game.addToCanvas(payload)
     })
 
     socket.on('finishRound', function() {
@@ -41,8 +43,10 @@ io.sockets.on('connection',
         io.sockets.emit('setPrompt', { prompt: game.getPrompt() })
         game.next()
         io.sockets.emit('currentPlayer', { currentPlayer: game.getCurrentPlayer() })
+        game.clearCanvas()
       } else {
         io.sockets.emit('gameFinished')
+        //game.reset()
       }
     })
 

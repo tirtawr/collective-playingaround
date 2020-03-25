@@ -16,10 +16,18 @@ body {
 #instructions {
   justify-content: center;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   margin-bottom: 1em;
+}
+
+#rules{
+  background: white;
+  padding: 1%;
+}
+
+#list{
+  text-align: left;
 }
 
 .title {
@@ -41,6 +49,7 @@ h2, p{
   padding: 2px;
   margin: 0px 4px;
   display: inline-block;
+  background: white;
 }
 
 .current-player{
