@@ -15,6 +15,7 @@ let socket
 // Color patch
 let colors = ['#000000', '#4C4C4C', '#ED150A', '#FE6F00', '#FAE502', '#03CB02', '#00B3FD', '#211FD2', '#A801BE', '#A1512B'];
 let colorPatches = [];
+let mySound
 
 let getRandomColor = () => {
   var letters = '0123456789ABCDEF';
@@ -56,6 +57,7 @@ function setup() {
       queueCurrentPlayer = currentPlayer 
       makeQueue(players)
       if(currentPlayer === socket.id){
+        mySound.play()
         myTurn = true;
         document.getElementById('turn-notif').innerHTML = "it's your turn!"
         ink = startingInkLevel;
@@ -93,6 +95,13 @@ function setup() {
   });
   
 }
+
+
+function preload() {
+  soundFormats('mp3', 'ogg')
+  mySound = loadSound('ping')
+}
+
 
 function draw() {
   // Draw color patches
