@@ -1,8 +1,8 @@
 
-const startingInkLevel = 255;
+const startingInkLevel = 500;
 
 //keep track of all users
-let players = {};
+let allPlayers = []
 // Is it my turn?
 let myTurn = false;
 //keep track of color
@@ -15,7 +15,8 @@ let socket
 // Color patch
 let colors = ['#000000', '#4C4C4C', '#ED150A', '#FE6F00', '#FAE502', '#03CB02', '#00B3FD', '#211FD2', '#A801BE', '#A1512B'];
 let colorPatches = [];
-let mySound
+let myTurnSound
+let joinSound
 
 let getRandomColor = () => {
   var letters = '0123456789ABCDEF';
@@ -38,7 +39,7 @@ function hexToRgb(hex) {
 function setup() {
 
   createCanvas(1000, 600);
-  
+
   socket = io();
   socket.on('connect', function() {
     console.log("Connected", socket.id);
@@ -55,9 +56,9 @@ function setup() {
   
     socket.on('currentPlayer', function({ currentPlayer }){
       queueCurrentPlayer = currentPlayer 
-      makeQueue(players)
+      makeQueue(allPlayers)
       if(currentPlayer === socket.id){
-        mySound.play()
+        myTurnSound.play()
         myTurn = true;
         document.getElementById('turn-notif').innerHTML = "it's your turn!"
         ink = startingInkLevel;
@@ -71,9 +72,12 @@ function setup() {
       drawPoint(drawData)
     });
   
-    socket.on('allPlayers', function(data) {
-      players = data;
-      makeQueue(data)
+    socket.on('allPlayers', function({players}) {
+      if(allPlayers.length && allPlayers.length < players.length) {
+        joinSound.play()
+      }
+      allPlayers = players
+      makeQueue(allPlayers)
     })
 
     socket.on('initialState', function({ canvas }){
@@ -99,7 +103,8 @@ function setup() {
 
 function preload() {
   soundFormats('mp3', 'ogg')
-  mySound = loadSound('ping')
+  myTurnSound = loadSound('ping')
+  joinSound = loadSound('join')
 }
 
 
@@ -169,7 +174,7 @@ function mouseClicked() {
 
 let queueCurrentPlayer = ''
 
-function makeQueue({players}){
+function makeQueue(players){
   const el = document.getElementById('queue-viz')
   el.innerHTML = ''
   for(let i = 0; i < players.length; i++){
