@@ -19,4 +19,4 @@ Collective Playingaround is a multiplayer drawing experience made by the utiliza
 This diagram describes the client-server communications
 
 
-![alt text](https://raw.githubusercontent.com/tirtawr/collective-playingaround/master/mechanics-diagran.png "Mechanics diagram")
+![alt text](https://raw.githubusercontent.com/tirtawr/collective-playingaround/master/mechanics-diagram.png "Mechanics diagram")
