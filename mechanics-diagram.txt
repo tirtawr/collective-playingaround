@@ -3,11 +3,12 @@
 PlayerClient -> Server: 1. connect
 Server -> Server: 2. Add client to socket list
 Server -> PlayerClient: 3. setPrompt { prompt: String }
-Server -> PlayerClient: 4. [To All] allPlayers { players: [String] }
+Server -> PlayerClient: 4. initialState { canvas: [ { x: Integer, y: Integer, color: String, inkLeft: Integer } ] }
+Server -> PlayerClient: 5. [To All] allPlayers { players: [String] }
 note right: filled with an array of player ids
-PlayerClient -> PlayerClient: 5. Update player list
+PlayerClient -> PlayerClient: 6. Update player list
 group If client is the first player
-    Server -> PlayerClient: 6. currentPlayer { id: String }
+    Server -> PlayerClient: 7. currentPlayer { id: String }
 end
 
 == Disconnecting from the server ==
@@ -25,9 +26,9 @@ PlayerClient -> PlayerClient: 5. Update player list
 Server -> PlayerClient: 1. [To All] currentPlayer { id: String }
 
 LOOP Until ink is used up
-    PlayerClient -> Server: 2. drawPoint { x: Integer, y: Integer, colorRed: Integer, \ncolorGreen: Integer, colorBlue: Integer, colorAlpha: Integer }
+    PlayerClient -> Server: 2. drawPoint { x: Integer, y: Integer, color: String, inkLeft: Integer }
     note right: x and y is normalized
-    Server -> PlayerClient: 3. [To All] drawPoint { x: Integer, y: Integer, colorRed: Integer, \ncolorGreen: Integer, colorBlue: Integer, colorAlpha: Integer }
+    Server -> PlayerClient: 3. [To All] drawPoint { x: Integer, y: Integer, color: String, inkLeft: Integer }
     PlayerClient -> PlayerClient: 4. Draw on canvas
 end
 
@@ -35,4 +36,10 @@ PlayerClient -> Server: 5. nextPlayer { }
 Server -> Server: 6. find id of next player on queue
 Server -> PlayerClient: 7. [To All] currentPlayer { id: String }
 
+== Finishing a Round and Starting a New One ==
+
+PlayerClient -> Server: 1. finishRound { }
+Server -> Server: 2. reset game when appropriate
+Server -> PlayerClient: 3. [To All] setPrompt { prompt: String }
+Server -> PlayerClient: 4. [To All] currentPlayer { id: String }
 @enduml
